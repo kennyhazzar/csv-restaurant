@@ -12,13 +12,31 @@ const router = Router()
 router.use(multer({ dest: "routes/api" }).single("filedata"))
 router.post('/generate', (req, res, next) => {
     const filedata = req.file
+    let sheetArray = []
     console.log(filedata)
-    fs.rename(`./routes/api/${filedata.filename}`, `./routes/api/${filedata.originalname}`, err => {
-        if (err) throw err
-        console.log('renamed complete')
-    })
-    res.redirect('/')
+    if (!filedata) {
+        res.send('файла нету')
+        return
+    }
+    if (filedata.originalname.includes('.csv')) {
+        fs.rename(`./routes/api/${filedata.filename}`, `./routes/api/${filedata.filename}.csv`, err => {
+            if (err) throw err
+            console.log('renamed complete')
+        })
+        fs.createReadStream(path.resolve(__dirname, '', `${filedata.filename}.csv`))
+            .pipe(csv.parse())
+            .on('error', error => console.error(error))
+            .on('data', row => sheetArray.push(row))
 
+        setTimeout(() => {
+            console.log(sheetArray)
+            res.json({ sheet: sheetArray })
+        }, 1000);
+        fs.unlinkSync(`./routes/api/${filedata.filename}.csv`)
+    } else {
+        fs.unlinkSync(`./routes/api/${filedata.filename}.csv`)
+        res.send('файл не .csv')
+    }
 })
 
 
