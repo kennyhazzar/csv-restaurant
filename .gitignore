@@ -1,0 +1,5 @@
+﻿/node_modules
+/config/default.json
+*.log
+/logs
+test.*
