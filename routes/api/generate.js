@@ -8,9 +8,13 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 const router = Router()
 router.use(multer({ dest: "routes/api" }).single("filedata"))
-router.post('/generate', (req, res, next) => {
+router.post('/generate', async (req, res, next) => {
     const filedata = req.file
     let sheetArray = []
     console.log(filedata)
@@ -27,11 +31,9 @@ router.post('/generate', (req, res, next) => {
             .pipe(csv.parse())
             .on('error', error => console.error(error))
             .on('data', row => sheetArray.push(row))
-
-        setTimeout(() => {
-            console.log(sheetArray)
-            res.json({ sheet: sheetArray })
-        }, 1000);
+            .on('close', err => console.log("stream has been destroyed"))
+        await sleep(100)
+        console.log(sheetArray)
         fs.unlinkSync(`./routes/api/${filedata.filename}.csv`)
     } else {
         fs.unlinkSync(`./routes/api/${filedata.filename}.csv`)
