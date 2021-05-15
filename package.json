@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "nodemon app.js",
-    "start": "concurrently \"node app.js\" \"\""
+    "start": "concurrently \"node app.js\" \"\"",
+    "client": "npm run start --prefix client"
   },
   "keywords": [
     "csv",
