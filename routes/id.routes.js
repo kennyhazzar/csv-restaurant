@@ -6,7 +6,8 @@ router.get('/:code', async (req, res) => {
     try {
         const menu = await Menu.findOne({ code: req.params.codeMenu })
         if (menu) {
-            console.log(menu)
+            menu.views++
+            await menu.save()
             return res.json({ menu })
         } else res.status(404).json('menu not found')
         
