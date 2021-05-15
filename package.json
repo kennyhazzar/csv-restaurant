@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@fast-csv/parse": "^4.3.6",
+    "concurrently": "^6.1.0",
     "config": "^3.3.6",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
