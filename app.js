@@ -6,9 +6,9 @@ const config = require('config')
 const PORT = 5000
 const menuFromId = require('./routes/id.routes')
 let app = express()
-// app.use(express.static(__dirname))
+app.use(express.json({extended: true}))
 app.use('/api', generate)
-app.use('/menu', menuFromId)
+// app.use('/menu', menuFromId)
 
 async function start() {
     try {

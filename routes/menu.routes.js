@@ -40,16 +40,16 @@ const fileFilter = (req, file, cb) => {
         cb(null, false)
     }
 }
-
-router.use(multer({ storage: storageConfig, fileFilter: fileFilter }).single("filedata"))
+// , fileFilter: fileFilter
+router.use(multer({ storage: storageConfig }).single("file"))
 
 router.post('/generate', async (req, res, next) => {
     try {
         const filedata = req.file
         let sheetArray = []
-        console.log(filedata)
+        console.log(req.data)
         if (!filedata) {
-            return res.send('Пожалуйста, используйте именно формат .csv')
+            return res.status(400).json({ error: 'Пожалуйста, используйте именно формат .csv' })
         }
         await sleep(100)
         fs.createReadStream(path.resolve(__dirname, '', `${filedata.filename}`))
@@ -73,6 +73,35 @@ router.post('/generate', async (req, res, next) => {
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "something wrong" })
+    }
+})
+
+router.get('/menu/all', async (req, res) => {
+    try {
+        const menu = await Menu.find()
+        if (!menu || menu.length == 0) {
+            res.status(400).json({error: "db was empty"})
+            return
+        }
+        res.json({ menus: menu })
+    } catch (error) {
+        console.log(error.message)
+        res.status(500).json({ error: "something wrong" })
+    }
+})
+
+router.get('/menu/:code', async (req, res) => {
+    try {
+        const menu = await Menu.findOne({ codeMenu: req.params.code })
+        if (menu) {
+            menu.views++
+            await menu.save()
+            return res.json({ menu })
+        } else return res.status(404).json('menu not found')
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: "something wrong in server" })
     }
 })
 
