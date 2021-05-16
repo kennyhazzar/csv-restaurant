@@ -3,7 +3,7 @@ const generate = require('./routes/menu.routes')
 const path = require('path')
 const mongoose = require('mongoose')
 const config = require('config')
-const PORT = 3000
+const PORT = 5000
 const menuFromId = require('./routes/id.routes')
 let app = express()
 // app.use(express.static(__dirname))

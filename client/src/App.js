@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import 'materialize-css'
+import { useRoutes } from './routes'
 
-export default class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Upload file</h1>
-        <form action="/api/generate" method="post" encType="multipart/form-data">
-          <label>Файл</label><br />
-          <input type="file" name="filedata" /><br /><br />
-          <input type="submit" defaultvalue="Send" />
-        </form>
+export default function App() {
+  const routes = useRoutes()
+  return (
+    <Router>
+      <div className="container">
+        {routes}
       </div>
-
-    )
-  }
+    </Router>
+  )
 }

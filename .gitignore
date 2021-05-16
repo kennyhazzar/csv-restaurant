@@ -2,7 +2,7 @@
 client/node_modules
 client/.pnp
 .pnp.js
-
+/node_modules
 # testing
 /coverage
 

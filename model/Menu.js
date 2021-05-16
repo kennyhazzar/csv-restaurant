@@ -1,7 +1,7 @@
-﻿// import { Schema } from 'mongoose'
-const { Schema, model } = require('mongoose')
+﻿const { Schema, model } = require('mongoose')
 
 const schema = new Schema({
+    title: {type: String, required: true, default: ""},
     date: { type: Date, required: true, default: Date.now },
     views: { type: Number, default: 0 },
     codeMenu: { type: String, unique: true, required: true },

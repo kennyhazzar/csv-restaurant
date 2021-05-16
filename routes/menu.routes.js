@@ -64,14 +64,12 @@ router.post('/generate', async (req, res, next) => {
         const baseUrl = config.get('baseUrl')
         const code = shortid.generate()
         const menuUri = baseUrl + '/menu/' + code
+        const title = filedata.filename.split('.csv')[0]
         const menu = new Menu({
-            codeMenu: code, menuUri, sheetArray
+            title, codeMenu: code, menuUri, sheetArray
         })
         await menu.save()
-        res.status(201).json({ code, data: menu, sheetArray, })
-        // res.status(200).json({})
-
-        // res.redirect('/')
+        res.status(201).json({ title, code, data: menu, sheetArray, })
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: "something wrong" })
