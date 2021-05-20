@@ -77,33 +77,4 @@ router.post('/generate', async (req, res, next) => {
     }
 })
 
-// router.get('/menu/all', async (req, res) => {
-//     try {
-//         const menu = await Menu.find()
-//         if (!menu || menu.length == 0) {
-//             res.status(400).json({error: "db was empty"})
-//             return
-//         }
-//         res.json({ menus: menu })
-//     } catch (error) {
-//         console.log(error.message)
-//         res.status(500).json({ error: "something wrong" })
-//     }
-// })
-
-// router.get('/menu/:code', async (req, res) => {
-//     try {
-//         const menu = await Menu.findOne({ codeMenu: req.params.code })
-//         if (menu) {
-//             menu.views++
-//             await menu.save()
-//             return res.json({ menu })
-//         } else return res.status(404).json('menu not found')
-
-//     } catch (error) {
-//         console.log(error)
-//         res.status(500).json({ message: "something wrong in server" })
-//     }
-// })
-
 module.exports = router
