@@ -8,7 +8,7 @@ const menuFromId = require('./routes/id.routes')
 let app = express()
 app.use(express.json({extended: true}))
 app.use('/api', generate)
-// app.use('/menu', menuFromId)
+app.use('/menu', menuFromId)
 
 async function start() {
     try {
