@@ -57,7 +57,25 @@ router.post('/generate', async (req, res, next) => {
             .on('data', row => { sheetArray.push(row);/* console.log(row); */ })
             .on('close', err => console.log("stream has been destroyed"))
         await sleep(100)
-        console.log(sheetArray) //Здесь должен быть по хорошему массив из объектов
+        let result = []
+        for (let index = 0; index < sheetArray.length; index++) {
+
+            if (sheetArray[index][0].length) {
+                let container = []
+                const categoryIndex = index
+                try {
+                    while (!sheetArray[index + 1][0]) {
+                        console.log(`${sheetArray[index + 1][0]}`)
+                        const filter = sheetArray[index + 1].filter(Boolean)
+                        container.push(filter)
+                        index++
+                    }
+                } catch (error) { }
+                // console.log(sheetArray[index][0])
+                result.push({ [sheetArray[categoryIndex][0]]: container })
+            }
+        }
+        console.log(JSON.stringify(result)) //Здесь должен быть по хорошему массив из объектов
         fs.unlinkSync(`./routes/${filedata.filename}`)
         await sleep(100)
         const baseUrl = config.get('baseUrl')
@@ -65,11 +83,11 @@ router.post('/generate', async (req, res, next) => {
         const menuUri = baseUrl + '/menu/' + code
         const title = filedata.filename.split('.csv')[0]
         const menu = new Menu({
-            title, codeMenu: code, menuUri, sheetArray
+            title, codeMenu: code, menuUri, sheetArray: result
         })
         await sleep(100)
         await menu.save()
-        res.status(201).json({ title, code, data: menu, sheetArray, })
+        res.status(201).json({ title, code, data: menu, sheetArray: result, })
 
     } catch (error) {
         console.log(error)
