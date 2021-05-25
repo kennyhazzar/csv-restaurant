@@ -1,8 +1,7 @@
 ﻿import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import GeneratePage from './pages/GeneratePage'
-// import { GeneratePage } from './pages/GeneratePage'
-import { idPage } from './pages/IdPage'
+import { GeneratePage } from './pages/GeneratePage'
+import { IdPage } from './pages/IdPage'
 import { MenusPage } from './pages/MenusPage'
 import { RulesPage } from './pages/RulesPage'
 export const useRoutes = () => {
@@ -12,7 +11,7 @@ export const useRoutes = () => {
                 <GeneratePage />
             </Route>
             <Route path='/menu/:code' exact>
-                <idPage />
+                <IdPage />
             </Route>
             <Route path='/menu' exact>
                 <MenusPage />
