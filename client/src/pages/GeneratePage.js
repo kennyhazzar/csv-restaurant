@@ -25,9 +25,15 @@ export const GeneratePage = () => {
     useEffect(() => { if (redirect) history.push(`/menu/${code}`) }, [redirect])
 
     return (
-        <div>
+        <div
+            style={{
+                display: "flex",
+                padding: '1em',
+                justifyContent: 'center',
+                flexDirection: 'column'
+            }}>
             <form>
-                <div className='flex'>
+                <div className='flex' style={{padding: '1em'}}>
                     <input type='file' id='file' accept='.csv' onChange={event => {
                         const file = event.target.files[0]
                         setFile(file)
