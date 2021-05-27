@@ -23,11 +23,11 @@ router.get('/:code', async (req, res) => {
             menu.views++
             await menu.save()
             return res.json({ menu })
-        } else return res.status(404).json('menu not found')
+        } else return res.status(404).json({error: 'menu not found'})
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ message: "something wrong in server" })
+        res.status(500).json({ error: "something wrong in server" })
     }
 })
 
