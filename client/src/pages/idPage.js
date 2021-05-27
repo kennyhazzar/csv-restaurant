@@ -19,6 +19,7 @@ export const IdPage = props => {
             } catch (error) {
                 console.log(`Ошибка: ${error}`)
                 setError(true)
+                setLoading(true)
             }
         },
         [menuId, axios],
