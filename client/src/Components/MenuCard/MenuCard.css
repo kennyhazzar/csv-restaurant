@@ -4,3 +4,8 @@
     /* align-items: center; */
     flex-wrap: wrap;
 }
+
+.section-case {
+    padding: '1em'
+
+}
