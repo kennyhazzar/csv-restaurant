@@ -10,7 +10,7 @@ export default function App() {
   return (
     <Router>
       <Navbar />
-      <div className="container" style={{margin: 10}}>
+      <div className="container" style={{display: "flex", justifyContent: "center"}}>
         {routes}
       </div>
     </Router>
