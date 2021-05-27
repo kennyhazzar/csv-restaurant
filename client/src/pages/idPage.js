@@ -5,6 +5,7 @@ import { MenuCard } from '../Components/MenuCard/MenuCard'
 
 export const IdPage = props => {
     const [menu, setMenu] = useState(null)
+    const [error, setError] = useState(false)
     const [loading, setLoading] = useState(false)
     const menuId = useParams().code
     console.log(menuId)
@@ -16,7 +17,8 @@ export const IdPage = props => {
                 setMenu(data.data.menu)
                 setLoading(true)
             } catch (error) {
-
+                console.log(`Ошибка: ${error}`)
+                setError(true)
             }
         },
         [menuId, axios],
@@ -30,6 +32,6 @@ export const IdPage = props => {
 
 
     return (
-        <> {loading && <MenuCard menu={menu} />}</>
+        <> {loading && <MenuCard menu={menu} error={error} />}</>
     )
 }
